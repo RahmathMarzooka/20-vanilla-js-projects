@@ -1,0 +1,62 @@
+.header{
+    background-color:red;
+    margin-bottom: 20px;
+}
+h1{
+    text-align: center;
+    color:white;
+}
+
+.input-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addTask{
+    width:500px;
+    height:40px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    
+}
+
+.addTask:focus{
+    border-color: black;
+}
+.btn{
+    margin-bottom: 20px;
+    width:100px;
+}
+
+
+.list-item{
+background-color: lightgray;
+font-weight:bold;
+}
+.checkBtn{
+    opacity: 0;
+}
+.item {
+    display:inline-block;
+   width:80%;
+    cursor: pointer;
+}
+ .edit { 
+    cursor: pointer;
+} 
+
+.delete{
+    cursor:pointer;
+}
+.style-list{
+    background-color: darkgrey;
+    
+}
+.checkBtn.show-check{
+    opacity:1;
+}
+
+.item.strike-task{
+    text-decoration: line-through;
+}
