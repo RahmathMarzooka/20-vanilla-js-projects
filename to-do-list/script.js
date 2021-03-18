@@ -10,44 +10,60 @@ let toDoEditId = 0
 addBtn.addEventListener('click', addToDoList)
 function addToDoList() {
     if (toDoEditId == 0) {
-        toDoList.push({ task: addTask.value, taskId: toDoId++ })
+        toDoList.push({ task: addTask.value, taskId: toDoId++, status: false })
     }
     else {
         let editedList = toDoList.find((toDoItem) => {
             return toDoItem.taskId == toDoEditId;
         })
+
         editedList.task = addTask.value;
         toDoEditId = 0;
         let addBtn = document.getElementById('addBtn')
         addBtn.innerText = "add"
-
     }
+
+
+
     renderList()
     addTask.value = '';
 }
 
 
 function renderList() {
-    list.innerHTML = toDoList.map((toDoItem) => {
-        return `<div class ="list-item">
-            <span class = "checkBtn"><i class="fa fa-check"></i></span>
-            <span class ="item" data-item-id=${toDoItem.taskId} onclick="styleList(event)"> ${toDoItem.task} </span>
-            <span class ="edit" data-edit-id = ${toDoItem.taskId} onclick = "editTask(event)"><i class="fa fa-edit"></i></span>
+    
+list.innerHTML = toDoList.map((toDoItem) => {
+        let strikeTask = "item"
+        let styletoDoList = "list-item"
+        let showCheck = "checkBtn"
+        let hideEdit = "edit"
+        if (toDoItem.status) {
+            strikeTask = "item strike-task"
+            styletoDoList = "list-item style-list"
+            showCheck = "checkBtn show-check"
+            hideEdit = "edit remove-btn"
+        }
+
+        return `<div class ="${styletoDoList}" data-toggle-id=${toDoItem.taskId}> 
+            <span class = "${showCheck}"><i class="fa fa-check"></i></span>
+            <span class ="${strikeTask}" data-item-id=${toDoItem.taskId} onclick="styleList(event)"> ${toDoItem.task} </span>
+            <span class ="${hideEdit}" data-edit-id = ${toDoItem.taskId} onclick = "editTask(event)"><i class="fa fa-edit"></i></span>
             <span class ="delete" data-delete-id =${toDoItem.taskId} onclick ="deleteTask(event)"><i class="fa fa-trash-o"></i></span>
         </div>`
     }).join('')
 }
 
-
 function styleList(e) {
-    e.target.classList.add('strike-task')
-    let completedList = e.target.parentElement
-    console.log(completedList)
-    completedList.classList.add('style-list')
-    let checkButton = e.target.previousElementSibling;
-    checkButton.classList.add('show-check')
-
+    let completedToDoId = e.currentTarget.getAttribute('data-item-id')
+    let completedItem = toDoList.find(toDoItem => {
+        return toDoItem.taskId == completedToDoId;
+    })
+    completedItem.status = true;
+    renderList();
 }
+
+
+
 function deleteTask(e) {
     let currentTargetId = e.currentTarget.getAttribute("data-delete-id")
     console.log(currentTargetId)
@@ -77,5 +93,6 @@ function editTask(e) {
 
 
 
-
 console.log(toDoList)
+
+
